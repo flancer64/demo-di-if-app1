@@ -1,0 +1,36 @@
+{
+  "name": "@flancer64/demo-di-if-app1",
+  "version": "0.1.2",
+  "description": "Npm-package with app code (the first implementation of plugin interfaces).",
+  "keywords": [
+    "demo",
+    "dependency injection",
+    "di",
+    "dynamic import",
+    "es6 modules",
+    "teqfw",
+    "tequila framework"
+  ],
+  "homepage": "https://github.com/flancer64/demo-di-if-app1#readme",
+  "bugs": {
+    "url": "https://github.com/flancer64/demo-di-if-app1/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Alex Gusev",
+    "email": "alex@flancer64.com",
+    "url": "https://github.com/flancer64"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flancer64/demo-di-if-app1.git"
+  },
+  "scripts": {
+    "start": "node ./bootstrap.js"
+  },
+  "dependencies": {
+    "@flancer64/demo-di-if-plugin": "^0.1.2",
+    "@teqfw/di": "^0.30.0"
+  }
+}
