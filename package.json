@@ -1,6 +1,6 @@
 {
   "name": "@flancer64/demo-di-if-app1",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Npm-package with app code (the first implementation of plugin interfaces).",
   "keywords": [
     "demo",
@@ -30,7 +30,7 @@
     "start": "node ./bootstrap.js"
   },
   "dependencies": {
-    "@flancer64/demo-di-if-plugin": "^0.1.2",
+    "@flancer64/demo-di-if-plugin": "^0.2.0",
     "@teqfw/di": "^0.30.0"
   }
 }

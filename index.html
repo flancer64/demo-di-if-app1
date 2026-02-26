@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>APP1: JS interfaces with @teqfw/di</title>
     <meta name="description"
-          content="Demonstration of interface usage with @teqfw/di. The main app with implementations of the plugin's interfaces."/>
+        content="Demonstration of interface usage with @teqfw/di. The main app with implementations of the plugin's interfaces." />
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <script type="module">
+
     // IMPORT
     import Container from 'https://cdn.jsdelivr.net/npm/@teqfw/di@0.30.0/+esm';
 
@@ -34,6 +36,8 @@
                     return replace(depId, 'Client1_Di_Package');
                 case 'Trans_Api_Route':
                     return replace(depId, 'Client1_Di_Route');
+                case 'Trans_Api_Logger':
+                    return replace(depId, 'Client1_Di_Logger');
             }
             return depId;
         }
@@ -41,11 +45,12 @@
 
     // MAIN
     // wrap the console.log to display console messages on the page
-    const orig = console.log;
-    console.log = function () {
-        orig.apply(console, arguments);
-        const el = document.getElementById('output');
-        el.innerHTML += arguments[0] + '\n';
+
+    const console = {
+        log: (msg) => {
+            const el = document.getElementById('output');
+            el.innerHTML += msg + '\n';
+        },
     };
 
     // Create the objects container
@@ -53,39 +58,46 @@
     const container = new Container();
     // Add path mapping for the sources (app itself and used library)
     const pathApp = (new URL('./src/', window.location.href)).href;
-    const pathPlugin = 'https://unpkg.com/@flancer64/demo-di-if-plugin@0.1.2/src';
+    const pathPlugin = 'https://unpkg.com/@flancer64/demo-di-if-plugin@0.2.0/src';
     const resolver = container.getResolver();
     resolver.addNamespaceRoot('Client1_', pathApp);
     resolver.addNamespaceRoot('Trans_', pathPlugin);
     container.getPreProcessor().addChunk(chunkImpl);
+    /** @type {Client1_Di_Logger} */
+    const logger = await container.get('Trans_Api_Logger$');
+    logger.setConsoleLogger(console);
     /** @type {Client1_App} */
     const app = await container.get('Client1_App$');
     app.run();
 </script>
+
 <body>
-<h1>APP1: JS interfaces with @teqfw/di</h1>
-<ul>
-    <li><a href="https://github.com/flancer64/demo-di-if-app1">@flancer64/demo-di-if-app1</a>: This application with the
-        plugin.
-    </li>
-    <li><a href="https://github.com/flancer64/demo-di-if-app2">@flancer64/demo-di-if-app2</a>: Another application with
-        the same plugin.
-    </li>
-    <li><a href="https://github.com/flancer64/demo-di-if-plugin">@flancer64/demo-di-if-plugin</a>: The plugin with the
-        interfaces declarations.
-    </li>
-    <li><a href="https://github.com/teqfw/di">@teqfw/di</a>: The Dependency Injection container.</li>
-</ul>
+    <h1>APP1: JS interfaces with @teqfw/di</h1>
+    <ul>
+        <li><a href="https://github.com/flancer64/demo-di-if-app1">@flancer64/demo-di-if-app1</a>: This application with
+            the
+            plugin.
+        </li>
+        <li><a href="https://github.com/flancer64/demo-di-if-app2">@flancer64/demo-di-if-app2</a>: Another application
+            with
+            the same plugin.
+        </li>
+        <li><a href="https://github.com/flancer64/demo-di-if-plugin">@flancer64/demo-di-if-plugin</a>: The plugin with
+            the
+            interfaces declarations.
+        </li>
+        <li><a href="https://github.com/teqfw/di">@teqfw/di</a>: The Dependency Injection container.</li>
+    </ul>
 
-<h2>Running as Web app</h2>
-<p>The output console for web app:</p>
-<pre id="output" style="background-color: black; color: green; padding: 5px;"></pre>
+    <h2>Running as Web app</h2>
+    <p>The output console for web app:</p>
+    <pre id="output" style="background-color: black; color: green; padding: 5px;"></pre>
 
-<h2>Running as Node app</h2>
+    <h2>Running as Node app</h2>
 
-<p>Clone, install, and run:</p>
+    <p>Clone, install, and run:</p>
 
-<pre>
+    <pre>
 $ git clone https://github.com/flancer64/demo-di-if-app1
 $ cd demo-di-if-app1/
 $ npm i
@@ -96,4 +108,5 @@ The package weight: 50.
 The route: from 'Marseille' to 'Nice'.
 </pre>
 </body>
+
 </html>

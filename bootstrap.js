@@ -26,6 +26,8 @@ const replaceChunk = {
                 return replace(depId, 'Client1_Di_Package');
             case 'Trans_Api_Route':
                 return replace(depId, 'Client1_Di_Route');
+            case 'Trans_Api_Logger':
+                return replace(depId, 'Client1_Di_Logger');
         }
         return depId;
     }
